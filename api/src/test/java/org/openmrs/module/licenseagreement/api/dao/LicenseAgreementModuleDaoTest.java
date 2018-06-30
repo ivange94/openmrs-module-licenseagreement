@@ -9,11 +9,15 @@
  */
 package org.openmrs.module.licenseagreement.api.dao;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.Ignore;
+import org.openmrs.User;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.licenseagreement.Item;
+import org.openmrs.module.licenseagreement.LicenseAgreement;
+import org.openmrs.module.licenseagreement.LicensedUser;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.hamcrest.Matchers.*;
@@ -32,6 +36,11 @@ public class LicenseAgreementModuleDaoTest extends BaseModuleContextSensitiveTes
 	
 	@Autowired
 	UserService userService;
+	
+	@Before
+	public void setUp() throws Exception {
+		executeDataSet("LicenseAgreementModuleDaoTestDataset.xml");
+	}
 	
 	@Test
 	@Ignore("Unignore if you want to make the Item class persistable, see also Item and liquibase.xml")
@@ -54,5 +63,50 @@ public class LicenseAgreementModuleDaoTest extends BaseModuleContextSensitiveTes
 		assertThat(savedItem, hasProperty("uuid", is(item.getUuid())));
 		assertThat(savedItem, hasProperty("owner", is(item.getOwner())));
 		assertThat(savedItem, hasProperty("description", is(item.getDescription())));
+	}
+	
+	@Test
+	public void getLicenseAgreement_shouldGetALicenseAgreement() {
+		LicenseAgreement licenseAgreement = dao.getLicenseAgreement();
+		
+		assertThat(licenseAgreement.getBody(), is("This is the end user license agreement. Read it carefully"));
+	}
+	
+	@Test
+	public void updateLicenseAgreementShouldUpdateBodyWhenLicenseAgreementIsUpdated() {
+		dao.updateLicenseAgreement("This is a new body");
+		LicenseAgreement updated = dao.getLicenseAgreement();
+		
+		assertThat(updated.getBody(), is("This is a new body"));
+	}
+	
+	@Test
+	public void updateLicenseAgreement_shouldUpdateVersionWhenLicenseAgreementIsUpdated() {
+		Integer oldVersion = dao.getLicenseAgreement().getVersion();
+		dao.updateLicenseAgreement("This is another update");
+		Integer newVersion = dao.getLicenseAgreement().getVersion();
+		
+		assertThat(newVersion, is(oldVersion + 1));
+	}
+	
+	@Test
+	public void getLicensedUser_shouldGetLicensedUserIfUserHasAcceptedLicenseAgreement() {
+		User user = Context.getUserService().getUser(1);
+		LicensedUser licensedUser = dao.getLicensedUser(user);
+		assertThat(licensedUser, is(notNullValue()));
+	}
+	
+	@Test
+	public void getLicensedUser_shouldReturnNullIfUserHasNotAcceptedLicenseAgreement() {
+		User user = Context.getUserService().getUser(2);
+		assertThat(user, is(notNullValue()));
+		LicensedUser licensedUser = dao.getLicensedUser(user);
+		assertThat(licensedUser, is(nullValue()));
+	}
+	
+	@Test
+	public void licenseUser_shouldLicenseUser() {
+		User user = Context.getUserService().getUser(1);
+		dao.licenseUser(user);
 	}
 }

@@ -1,15 +1,32 @@
 <% ui.decorateWith("appui", "standardEmrPage") %>
 
-Hello, world.
+<script>
+    var jq = jQuery;
 
-<% if (context.authenticated) { %>
-    And a special hello to you, $context.authenticatedUser.personName.fullName.
-    Your roles are:
-    <% context.authenticatedUser.roles.findAll { !it.retired }.each { %>
-        $it.role ($it.description)
-    <% } %>
-<% } else { %>
-    You are not logged in.
-<% } %>
+    jq(function() {
+        function toggleBody(status) {
+            jq("#licenseBody").prop("disabled", status);
+        }
 
-${ ui.includeFragment("licenseagreement", "users") }
+        jq("#edit-license-button").on('click', function(event) {
+            event.preventDefault();
+            toggleBody(false)
+        });
+
+        jq("#save-license-button").on('click', function (event) {
+            event.preventDefault();
+            toggleBody(true);
+
+            jq.post('${ui.actionLink("licenseagreement", "licenseAgreement", "acceptLicenseAgreement")}'
+
+            );
+        });
+    });
+</script>
+<div>
+    <h3>End User License Agreement</h3>
+    <form>
+        <textarea name="licenseBody" id="licenseBody" cols="30" rows="20" disabled></textarea><br>
+        <button class="cancel" id="edit-license-button">Decline</button>&nbsp;<input type="submit" class="confirm" value="Accept" id="save-license-button">
+    </form>
+</div>

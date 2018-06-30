@@ -9,10 +9,14 @@
  */
 package org.openmrs.module.licenseagreement.api.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.User;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.licenseagreement.Item;
+import org.openmrs.module.licenseagreement.LicenseAgreement;
+import org.openmrs.module.licenseagreement.LicensedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,5 +37,28 @@ public class LicenseAgreementModuleDao {
 	public Item saveItem(Item item) {
 		getSession().saveOrUpdate(item);
 		return item;
+	}
+	
+	public LicenseAgreement updateLicenseAgreement(String licenseBody) {
+		LicenseAgreement licenseAgreement = getLicenseAgreement();
+		licenseAgreement.setBody(licenseBody);
+		licenseAgreement.setVersion(licenseAgreement.getVersion() + 1);
+		getSession().saveOrUpdate(licenseAgreement);
+		return licenseAgreement;
+	}
+	
+	public LicenseAgreement getLicenseAgreement() {
+		return (LicenseAgreement) getSession().createCriteria(LicenseAgreement.class).list().get(0);
+	}
+	
+	public LicensedUser licenseUser(User user) {
+		LicensedUser licensedUser = new LicensedUser(user, getLicenseAgreement().getVersion());
+		getSession().saveOrUpdate(licensedUser);
+		return licensedUser;
+	}
+	
+	public LicensedUser getLicensedUser(User user) {
+		return (LicensedUser) getSession().createCriteria(LicensedUser.class).add(Restrictions.eq("user", user))
+		        .uniqueResult();
 	}
 }

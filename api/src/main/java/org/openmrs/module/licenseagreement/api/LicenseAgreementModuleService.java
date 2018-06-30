@@ -9,11 +9,14 @@
  */
 package org.openmrs.module.licenseagreement.api;
 
+import org.openmrs.User;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.licenseagreement.LicenseAgreement;
 import org.openmrs.module.licenseagreement.LicenseAgreementModuleConfig;
 import org.openmrs.module.licenseagreement.Item;
+import org.openmrs.module.licenseagreement.LicensedUser;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -45,4 +48,20 @@ public interface LicenseAgreementModuleService extends OpenmrsService {
 	@Authorized(LicenseAgreementModuleConfig.MODULE_PRIVILEGE)
 	@Transactional
 	Item saveItem(Item item) throws APIException;
+	
+	@Authorized
+	@Transactional
+	LicensedUser licenseUser(User user);
+	
+	@Authorized
+	@Transactional(readOnly = true)
+	LicensedUser getLicensedUser(User user);
+	
+	@Authorized
+	@Transactional(readOnly = true)
+	LicenseAgreement getLicenseAgreement();
+	
+	@Authorized
+	@Transactional
+	LicenseAgreement updateLicenseAgreement(String licenseBody);
 }

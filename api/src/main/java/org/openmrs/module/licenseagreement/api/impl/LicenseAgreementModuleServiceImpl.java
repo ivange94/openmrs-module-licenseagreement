@@ -9,10 +9,13 @@
  */
 package org.openmrs.module.licenseagreement.api.impl;
 
+import org.openmrs.User;
 import org.openmrs.api.APIException;
 import org.openmrs.api.UserService;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.licenseagreement.Item;
+import org.openmrs.module.licenseagreement.LicenseAgreement;
+import org.openmrs.module.licenseagreement.LicensedUser;
 import org.openmrs.module.licenseagreement.api.LicenseAgreementModuleService;
 import org.openmrs.module.licenseagreement.api.dao.LicenseAgreementModuleDao;
 
@@ -48,5 +51,25 @@ public class LicenseAgreementModuleServiceImpl extends BaseOpenmrsService implem
 		}
 		
 		return dao.saveItem(item);
+	}
+	
+	@Override
+	public LicensedUser licenseUser(User user) {
+		return dao.licenseUser(user);
+	}
+	
+	@Override
+	public LicensedUser getLicensedUser(User user) {
+		return dao.getLicensedUser(user);
+	}
+	
+	@Override
+	public LicenseAgreement getLicenseAgreement() {
+		return dao.getLicenseAgreement();
+	}
+	
+	@Override
+	public LicenseAgreement updateLicenseAgreement(String licenseBody) {
+		return dao.updateLicenseAgreement(licenseBody);
 	}
 }
