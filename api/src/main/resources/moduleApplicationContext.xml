@@ -27,7 +27,7 @@
 
     <!-- Wraps LicenseAgreementModuleService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="licenseagreement.LicenseAgreementModuleService"
+    <bean id="licenseAgreementModuleService"
             class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
@@ -51,7 +51,7 @@
         <property name="moduleService">
             <list>
                 <value>org.openmrs.module.licenseagreement.api.LicenseAgreementModuleService</value>
-                <ref bean="licenseagreement.LicenseAgreementModuleService" />
+                <ref bean="licenseAgreementModuleService" />
             </list>
         </property>
     </bean>
