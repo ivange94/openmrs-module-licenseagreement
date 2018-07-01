@@ -9,7 +9,6 @@
  */
 package org.openmrs.module.licenseagreement.api.dao;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.User;
 import org.openmrs.api.db.hibernate.DbSession;
@@ -52,7 +51,11 @@ public class LicenseAgreementModuleDao {
 	}
 	
 	public LicensedUser licenseUser(User user) {
-		LicensedUser licensedUser = new LicensedUser(user, getLicenseAgreement().getVersion());
+		LicensedUser licensedUser = getLicensedUser(user);
+		if (licensedUser == null)
+			licensedUser = new LicensedUser(user, getLicenseAgreement().getVersion());
+		else
+			licensedUser.setLicenseVersionSigned(getLicenseAgreement().getVersion());
 		getSession().saveOrUpdate(licensedUser);
 		return licensedUser;
 	}

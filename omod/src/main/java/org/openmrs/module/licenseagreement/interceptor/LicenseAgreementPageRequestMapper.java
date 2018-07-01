@@ -2,6 +2,7 @@ package org.openmrs.module.licenseagreement.interceptor;
 
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.licenseagreement.LicensedUser;
 import org.openmrs.module.licenseagreement.api.LicenseAgreementModuleService;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.ui.framework.page.PageRequestMapper;
@@ -17,7 +18,7 @@ public class LicenseAgreementPageRequestMapper implements PageRequestMapper {
 	@Override
 	public boolean mapRequest(PageRequest pageRequest) {
 		if (everyPageExcept("login", "denied", "licenseagreement", "myaccount/changePassword", pageRequest)
-		        && licenseAgreementNotAccepted()) {
+		        && needToSignLicenseAgreement()) {
 			pageRequest.setProviderNameOverride("licenseagreement");
 			pageRequest.setPageName("notification");
 			return true;
@@ -25,9 +26,14 @@ public class LicenseAgreementPageRequestMapper implements PageRequestMapper {
 		return false;
 	}
 	
-	private boolean licenseAgreementNotAccepted() {
+	private boolean needToSignLicenseAgreement() {
 		User user = Context.getAuthenticatedUser();
-		return service.getLicensedUser(user) == null;
+		LicensedUser licensedUser = service.getLicensedUser(user);
+		boolean shouldlAcceptLicenseAgreement = licensedUser == null;
+		if (!shouldlAcceptLicenseAgreement)
+			shouldlAcceptLicenseAgreement = licensedUser.getLicenseVersionSigned() != service.getLicenseAgreement()
+			        .getVersion();
+		return shouldlAcceptLicenseAgreement;
 	}
 	
 	private boolean everyPageExcept(String page1, String page2, String page3, String page4, PageRequest pageRequest) {
