@@ -1,6 +1,6 @@
 <% ui.decorateWith("appui", "standardEmrPage") %>
 
-<openmrs:require privilege="" otherwise="/login.htm" redirect="/admin/concepts/conceptClass.form" />
+<openmrs:require privilege="Edit License Agreement" otherwise="/login.htm" redirect="/module/licenseagreement/manageLicenseAgreement.page"/>
 
 <script>
     var jq = jQuery;

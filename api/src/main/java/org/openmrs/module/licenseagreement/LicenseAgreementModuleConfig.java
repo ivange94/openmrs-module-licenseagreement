@@ -17,5 +17,7 @@ import org.springframework.stereotype.Component;
 @Component("licenseagreement.LicenseAgreementModuleConfig")
 public class LicenseAgreementModuleConfig {
 	
-	public final static String MODULE_PRIVILEGE = "License Agreement Module Privilege";
+	public static final String MODULE_PRIVILEGE = "License Agreement Module Privilege";
+	
+	public static final String EDIT_LICENSE_AGREEMENT_PRIVILEGE = "Edit License Agreement";
 }

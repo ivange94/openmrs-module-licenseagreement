@@ -60,6 +60,11 @@
 	</privilege>
 	 /Required Privileges -->
 
+	<privilege>
+		<name>Edit License Agreement</name>
+		<description>Update user terms and conditions</description>
+	</privilege>
+
 
 	<!-- Required Global Properties 
 	<globalProperty>
