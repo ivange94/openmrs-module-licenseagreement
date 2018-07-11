@@ -11,7 +11,7 @@
                 {
                 })
                 .success(function(data) {
-                    jq("#licenseBody").val(data.licenseBody);
+                    jq("licenseBody").val(data.licenseBody);
                 })
                 .error(function(xhr, status, err) {
                     alert('AJAX error ' + err);
@@ -56,10 +56,12 @@
     }
 </style>
 <div>
-    <p id="message">End user license agreement updated</p>
-    <h3>End User License Agreement</h3>
+    <p id="message">${ui.message("licenseagreement.legal.app.update.description")}</p>
+    <h3>${ui.message("licenseagreement.legal.app.label")}</h3>
     <form>
-        <textarea name="licenseBody" id="licenseBody" cols="30" rows="20" disabled></textarea><br>
-        <button class="button cancel" id="edit-license-button" href='${ui.pageLink("licenseagreement", "denied")}'>Edit</button>&nbsp;<input type="submit" class="confirm" value="Save" id="save-license-button">
+        <textarea name="licenseBody" id="licenseBody" cols="30" disabled>${ui.message("licenseagreement.legal.app.update.message.description")}</textarea><br>
+        <label for="license-link">${ui.message("licenseagreement.legal.app.license.link.label")}</label>
+        <input type="text" id="license-link">
+        <button class="button cancel" id="cancel-edit-license-button">${ui.message("licenseagreement.legal.app.button.cancel")}</button>&nbsp;<input type="submit" class="confirm" value="${ui.message("licenseagreement.legal.app.button.update")}" id="save-license-button">
     </form>
 </div>

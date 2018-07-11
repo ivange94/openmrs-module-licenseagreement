@@ -1,0 +1,18 @@
+[
+  {
+    "id": "licenseagreement.Legal",
+    "description": "Legal App",
+    "order": 2,
+    "extensions": [
+      {
+        "id": "licenseagreement.Legal",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "licenseagreement.legal.app.label",
+        "url": "licenseagreement/legal.page",
+        "icon": "icon-list-alt",
+        "requiredPrivilege": "Access Legal App"
+      }
+    ]
+  }
+]

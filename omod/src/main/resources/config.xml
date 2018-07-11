@@ -64,6 +64,10 @@
 		<name>Edit License Agreement</name>
 		<description>Update user terms and conditions</description>
 	</privilege>
+	<privilege>
+		<name>Access Legal App</name>
+		<description>Access Legal App</description>
+	</privilege>
 
 
 	<!-- Required Global Properties 
