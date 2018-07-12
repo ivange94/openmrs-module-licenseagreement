@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <license_agreement id="1" body="This is the end user license agreement. Read it carefully" creator="1" version="1" date_created="2015-01-01 00:00:00.0" voided="false" uuid="9627cdd2-3d26-4981-aee2-baae53670608"/>
+    <license_agreement id="1" url="http://example.com" creator="1" version="1" date_created="2015-01-01 00:00:00.0" voided="false" uuid="9627cdd2-3d26-4981-aee2-baae53670608"/>
     <licensed_user id="1" user="1" license_version_signed="1" date_created="2015-01-01 00:00:00.0" creator="1" voided="false" uuid="67b14101-e798-4103-91c2-781c199dc82d"/>
 
     <person person_id="12" gender="F" birthdate="1975-06-07" dead="false" creator="1" date_created="2017-01-01 00:00:00.0" voided="false" uuid="d2c1adbf-d9fa-11e5-90c3-08002719a237" />

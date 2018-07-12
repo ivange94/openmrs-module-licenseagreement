@@ -38,9 +38,9 @@ public class LicenseAgreementModuleDao {
 		return item;
 	}
 	
-	public LicenseAgreement updateLicenseAgreement(String licenseBody) {
+	public LicenseAgreement updateLicenseAgreement(String url) {
 		LicenseAgreement licenseAgreement = getLicenseAgreement();
-		licenseAgreement.setBody(licenseBody);
+		licenseAgreement.setUrl(url);
 		licenseAgreement.setVersion(licenseAgreement.getVersion() + 1);
 		getSession().saveOrUpdate(licenseAgreement);
 		return licenseAgreement;

@@ -63,5 +63,5 @@ public interface LicenseAgreementModuleService extends OpenmrsService {
 	
 	@Authorized(LicenseAgreementModuleConfig.EDIT_LICENSE_AGREEMENT_PRIVILEGE)
 	@Transactional
-	LicenseAgreement updateLicenseAgreement(String licenseBody);
+	LicenseAgreement updateLicenseAgreement(String url);
 }

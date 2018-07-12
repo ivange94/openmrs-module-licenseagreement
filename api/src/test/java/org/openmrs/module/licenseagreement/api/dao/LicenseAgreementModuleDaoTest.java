@@ -69,21 +69,21 @@ public class LicenseAgreementModuleDaoTest extends BaseModuleContextSensitiveTes
 	public void getLicenseAgreement_shouldGetALicenseAgreement() {
 		LicenseAgreement licenseAgreement = dao.getLicenseAgreement();
 		
-		assertThat(licenseAgreement.getBody(), is("This is the end user license agreement. Read it carefully"));
+		assertThat(licenseAgreement.getUrl(), is("http://example.com"));
 	}
 	
 	@Test
 	public void updateLicenseAgreementShouldUpdateBodyWhenLicenseAgreementIsUpdated() {
-		dao.updateLicenseAgreement("This is a new body");
+		dao.updateLicenseAgreement("http://another.example.com");
 		LicenseAgreement updated = dao.getLicenseAgreement();
 		
-		assertThat(updated.getBody(), is("This is a new body"));
+		assertThat(updated.getUrl(), is("http://another.example.com"));
 	}
 	
 	@Test
 	public void updateLicenseAgreement_shouldUpdateVersionWhenLicenseAgreementIsUpdated() {
 		Integer oldVersion = dao.getLicenseAgreement().getVersion();
-		dao.updateLicenseAgreement("This is another update");
+		dao.updateLicenseAgreement("http://another.example.com");
 		Integer newVersion = dao.getLicenseAgreement().getVersion();
 		
 		assertThat(newVersion, is(oldVersion + 1));

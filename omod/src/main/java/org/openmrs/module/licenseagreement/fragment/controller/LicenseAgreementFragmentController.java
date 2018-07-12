@@ -2,7 +2,6 @@ package org.openmrs.module.licenseagreement.fragment.controller;
 
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.licenseagreement.LicenseAgreement;
 import org.openmrs.module.licenseagreement.api.LicenseAgreementModuleService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
@@ -26,14 +25,14 @@ public class LicenseAgreementFragmentController {
 	}
 	
 	public SimpleObject getLicenseAgreement() {
-		String licenseBody = service.getLicenseAgreement().getBody();
+		String url = service.getLicenseAgreement().getUrl();
 		SimpleObject response = new SimpleObject();
-		response.put("licenseBody", licenseBody);
+		response.put("url", url);
 		return response;
 	}
 	
-	public SimpleObject saveLicenseAgreement(@RequestParam("body") String body) {
-		service.updateLicenseAgreement(body);
+	public SimpleObject saveLicenseAgreement(@RequestParam("url") String url) {
+		service.updateLicenseAgreement(url);
 		return getLicenseAgreement();
 	}
 }

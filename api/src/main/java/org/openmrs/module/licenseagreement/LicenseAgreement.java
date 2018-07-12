@@ -18,7 +18,7 @@ public class LicenseAgreement extends BaseOpenmrsData {
 	private Integer id;
 	
 	@Column
-	private String body;
+	private String url;
 	
 	@Column
 	private Integer version;
@@ -31,12 +31,12 @@ public class LicenseAgreement extends BaseOpenmrsData {
 		this.id = id;
 	}
 	
-	public String getBody() {
-		return body;
+	public String getUrl() {
+		return url;
 	}
 	
-	public void setBody(String body) {
-		this.body = body;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 	public Integer getVersion() {

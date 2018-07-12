@@ -1,6 +1,6 @@
 <% ui.decorateWith("appui", "standardEmrPage") %>
 
-<openmrs:require privilege="Edit License Agreement" otherwise="/login.htm" redirect="/module/licenseagreement/manageLicenseAgreement.page"/>
+<% context.requirePrivilege("Edit License Agreement")%>
 
 <script>
     var jq = jQuery;
@@ -11,7 +11,7 @@
                 {
                 })
                 .success(function(data) {
-                    jq("licenseBody").val(data.licenseBody);
+                    jq("#license-link").val(data.url);
                 })
                 .error(function(xhr, status, err) {
                     alert('AJAX error ' + err);
@@ -20,20 +20,19 @@
 
         jq("#edit-license-button").on('click', function(event) {
             event.preventDefault();
-            jq("#licenseBody").prop("disabled", false);
+            jq("#license-link").prop("disabled", false);
             jq("#message").hide();
         });
 
         jq("#save-license-button").on('click', function(event) {
             event.preventDefault();
 
-            jq("#licenseBody").prop("disabled", true);
             jq.getJSON('${ ui.actionLink("licenseagreement", "licenseAgreement", "saveLicenseAgreement") }',
                 {
-                    'body': jq("#licenseBody").val()
+                    'url': jq("#license-link").val()
                 })
                 .success(function(data) {
-                    jq("#licenseBody").val(data.licenseBody);
+                    jq("#url").val(data.licenseBody);
                     jq("#message").show();
                 })
                 .error(function(xhr, status, err) {
@@ -56,7 +55,7 @@
     }
 </style>
 <div>
-    <p id="message">${ui.message("licenseagreement.legal.app.update.description")}</p>
+    <p id="message">${ui.message("licenseagreement.legal.app.update.message")}</p>
     <h3>${ui.message("licenseagreement.legal.app.label")}</h3>
     <form>
         <textarea name="licenseBody" id="licenseBody" cols="30" disabled>${ui.message("licenseagreement.legal.app.update.message.description")}</textarea><br>

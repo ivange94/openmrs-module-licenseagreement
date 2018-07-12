@@ -69,7 +69,7 @@ public class LicenseAgreementModuleServiceImpl extends BaseOpenmrsService implem
 	}
 	
 	@Override
-	public LicenseAgreement updateLicenseAgreement(String licenseBody) {
-		return dao.updateLicenseAgreement(licenseBody);
+	public LicenseAgreement updateLicenseAgreement(String url) {
+		return dao.updateLicenseAgreement(url);
 	}
 }
