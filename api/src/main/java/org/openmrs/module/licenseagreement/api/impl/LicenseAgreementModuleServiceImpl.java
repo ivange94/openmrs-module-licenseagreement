@@ -12,6 +12,7 @@ package org.openmrs.module.licenseagreement.api.impl;
 import org.openmrs.User;
 import org.openmrs.api.APIException;
 import org.openmrs.api.UserService;
+import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.licenseagreement.Item;
 import org.openmrs.module.licenseagreement.LicenseAgreement;
@@ -71,5 +72,14 @@ public class LicenseAgreementModuleServiceImpl extends BaseOpenmrsService implem
 	@Override
 	public LicenseAgreement updateLicenseAgreement(String url) {
 		return dao.updateLicenseAgreement(url);
+	}
+	
+	@Override
+	public boolean hasAcceptedLicensedAgreement(User user) {
+		LicensedUser licensedUser = getLicensedUser(user);
+		boolean shouldlAcceptLicenseAgreement = licensedUser == null;
+		if (!shouldlAcceptLicenseAgreement)
+			shouldlAcceptLicenseAgreement = licensedUser.getLicenseVersionSigned() != getLicenseAgreement().getVersion();
+		return !shouldlAcceptLicenseAgreement;
 	}
 }

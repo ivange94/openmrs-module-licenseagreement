@@ -5,6 +5,12 @@
 <script>
     var jq = jQuery;
 
+    var breadcrumbs = [
+        { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
+        { label: "${ ui.message("licenseagreement.legal.app.label") }", link: "${ ui.pageLink("licenseagreement", "legal") }" },
+        { label: "${ ui.message("licenseagreement.signed.page.table.header.agreement") }", link: "${ ui.pageLink("licenseagreement", "manageLicenseAgreement") }" }
+    ];
+
     jq(function() {
         function getLicenseAgreement() {
             jq.getJSON('${ ui.actionLink("licenseagreement", "licenseAgreement", "getLicenseAgreement") }',
